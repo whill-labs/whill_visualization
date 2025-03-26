@@ -24,9 +24,9 @@
 #include <string>
 #include <vector>
 
-#include "ros2_whill_visualization_msgs/msg/polygon_array.hpp"
+#include "whill_visualization_msgs/msg/polygon_array.hpp"
 
-// カスタムメッセージタイプのvalidateFloats関数を追加
+// Add validateFloats function for custom message types
 namespace rviz_common
 {
 bool validateFloats(const geometry_msgs::msg::PolygonStamped & polygon);
@@ -36,9 +36,9 @@ inline bool validateFloats(const geometry_msgs::msg::PolygonStamped & polygon)
   return validateFloats(polygon.polygon.points);
 }
 
-bool validateFloats(const ros2_whill_visualization_msgs::msg::PolygonArray & msg);
+bool validateFloats(const whill_visualization_msgs::msg::PolygonArray & msg);
 
-inline bool validateFloats(const ros2_whill_visualization_msgs::msg::PolygonArray & msg)
+inline bool validateFloats(const whill_visualization_msgs::msg::PolygonArray & msg)
 {
   for (const auto & polygon : msg.polygons) {
     if (!validateFloats(polygon)) {
@@ -56,10 +56,10 @@ inline bool validateFloats(const ros2_whill_visualization_msgs::msg::PolygonArra
 }
 }  // namespace rviz_common
 
-namespace ros2_whill_visualization
+namespace whill_visualization
 {
 class PolygonArrayDisplay
-: public rviz_common::MessageFilterDisplay<ros2_whill_visualization_msgs::msg::PolygonArray>
+: public rviz_common::MessageFilterDisplay<whill_visualization_msgs::msg::PolygonArray>
 {
   Q_OBJECT
 
@@ -74,10 +74,10 @@ protected:
   virtual void onInitialize() override;
   virtual void reset() override;
   virtual void processMessage(
-    ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr msg) override;
+    whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr msg) override;
 
 private:
-  void updateSceneNodes(const ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr & msg);
+  void updateSceneNodes(const whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr & msg);
   void allocateMaterials(int num);
   void updateLines(int num);
   Ogre::ColourValue getColor(size_t index);
@@ -103,7 +103,7 @@ private:
   std::string coloring_method_;
   bool show_normal_;
   double normal_length_;
-  ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr latest_msg_;
+  whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr latest_msg_;
 
   // Rendering objects
   std::vector<Ogre::ManualObject *> manual_objects_;
@@ -121,6 +121,6 @@ private Q_SLOTS:
   void updateNormalLength();
 };
 
-}  // namespace ros2_whill_visualization
+}  // namespace whill_visualization
 
 #endif  // POLYGON_ARRAY_DISPLAY_HPP_

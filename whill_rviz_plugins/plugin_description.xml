@@ -1,0 +1,11 @@
+<library path="whill_rviz_plugins">
+  <class
+    name="whill_visualization/PolygonArray"
+    type="whill_visualization::PolygonArrayDisplay"
+    base_class_type="rviz_common::Display">
+    <description>
+      Plugin to display polygon arrays
+    </description>
+    <message_type>whill_visualization_msgs/msg/PolygonArray</message_type>
+  </class>
+</library>

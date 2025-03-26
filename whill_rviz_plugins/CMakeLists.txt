@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ros2_whill_rviz_plugins)
+project(whill_rviz_plugins)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,7 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(ros2_whill_visualization_msgs REQUIRED)
+find_package(whill_visualization_msgs REQUIRED)
 find_package(rviz_common REQUIRED)
 find_package(rviz_rendering REQUIRED)
 find_package(rviz_default_plugins REQUIRED)
@@ -33,7 +33,7 @@ ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   std_msgs
   geometry_msgs
-  ros2_whill_visualization_msgs
+  whill_visualization_msgs
   rviz_common
   rviz_rendering
   rviz_default_plugins
@@ -77,7 +77,7 @@ ament_export_dependencies(
   rclcpp
   std_msgs
   geometry_msgs
-  ros2_whill_visualization_msgs
+  whill_visualization_msgs
   rviz_common
   rviz_rendering
   rviz_default_plugins

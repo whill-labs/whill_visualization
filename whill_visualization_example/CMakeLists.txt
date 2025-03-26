@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ros2_whill_visualization_example)
+project(whill_visualization_example)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,7 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(ros2_whill_visualization_msgs REQUIRED)
+find_package(whill_visualization_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -30,7 +30,7 @@ ament_target_dependencies(polygon_array_publisher
   rclcpp
   std_msgs
   geometry_msgs
-  ros2_whill_visualization_msgs
+  whill_visualization_msgs
 )
 
 # インストール

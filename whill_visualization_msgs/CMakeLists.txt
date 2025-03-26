@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ros2_whill_visualization_msgs)
+project(whill_visualization_msgs)
 
 # 依存パッケージを検索
 find_package(ament_cmake REQUIRED)

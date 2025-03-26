@@ -5,10 +5,10 @@
 #include <rclcpp/rclcpp.hpp>
 #include <vector>
 
-#include "ros2_whill_visualization_msgs/msg/polygon_array.hpp"
+#include "whill_visualization_msgs/msg/polygon_array.hpp"
 
 using namespace std::chrono_literals;
-using namespace ros2_whill_visualization_msgs::msg;
+using namespace whill_visualization_msgs::msg;
 
 class PolygonArrayPublisher : public rclcpp::Node
 {

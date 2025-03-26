@@ -8,11 +8,11 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     # パッケージのパスを取得
-    package_dir = get_package_share_directory('ros2_whill_visualization_example')
+    package_dir = get_package_share_directory('whill_visualization_example')
 
     # ノードの設定
     polygon_publisher = Node(
-        package='ros2_whill_visualization_example',
+        package='whill_visualization_example',
         executable='polygon_array_publisher',
         name='polygon_publisher',
         parameters=[{

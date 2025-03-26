@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>ros2_whill_rviz_plugins</name>
+  <name>whill_rviz_plugins</name>
   <version>1.0.0</version>
   <description>RViz plugins for visualizing WHILL-specific messages and data</description>
   <maintainer email="tadashi.imokawa@whill.inc">Tadashi Imokawa</maintainer>
@@ -15,7 +15,7 @@
   <depend>rviz_default_plugins</depend>
   <depend>pluginlib</depend>
   <depend>Qt5</depend>
-  <depend>ros2_whill_visualization_msgs</depend>
+  <depend>whill_visualization_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

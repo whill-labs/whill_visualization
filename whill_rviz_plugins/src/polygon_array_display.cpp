@@ -10,7 +10,7 @@
 #include <rviz_common/properties/parse_color.hpp>
 #include <rviz_common/validate_floats.hpp>
 
-namespace ros2_whill_visualization
+namespace whill_visualization
 {
 
 PolygonArrayDisplay::PolygonArrayDisplay()
@@ -89,15 +89,15 @@ void PolygonArrayDisplay::reset()
 }
 
 void PolygonArrayDisplay::updateSceneNodes(
-  const ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr & msg)
+  const whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr & msg)
 {
-  // シーンノードの更新
+  // Update scene nodes
   int scale_factor = 2;
   if (only_border_) {
     scale_factor = 1;
   }
 
-  // Manual objectsの作成・更新
+  // Create or update manual objects
   if (msg->polygons.size() * scale_factor > manual_objects_.size()) {
     for (size_t i = manual_objects_.size(); i < msg->polygons.size() * scale_factor; i++) {
       Ogre::SceneNode * scene_node = scene_node_->createChildSceneNode();
@@ -113,7 +113,7 @@ void PolygonArrayDisplay::updateSceneNodes(
     }
   }
 
-  // Arrow objectsの作成・更新
+  // Create or update arrow objects
   if (msg->polygons.size() > arrow_objects_.size()) {
     for (size_t i = arrow_objects_.size(); i < msg->polygons.size(); i++) {
       Ogre::SceneNode * scene_node = scene_node_->createChildSceneNode();
@@ -234,7 +234,7 @@ void PolygonArrayDisplay::processLine(
   Ogre::ColourValue color = getColor(i);
   line->setColor(color.r, color.g, color.b, color.a);
 
-  // ポリゴンの頂点を追加
+  // Add polygon vertices
   for (size_t j = 0; j < polygon.polygon.points.size(); ++j) {
     Ogre::Vector3 step_position;
     step_position.x = polygon.polygon.points[j].x;
@@ -243,7 +243,7 @@ void PolygonArrayDisplay::processLine(
     line->addPoint(step_position);
   }
 
-  // 最初の点に戻って閉じる
+  // Return to the first point and close
   if (!polygon.polygon.points.empty()) {
     Ogre::Vector3 step_position;
     step_position.x = polygon.polygon.points[0].x;
@@ -288,15 +288,15 @@ void PolygonArrayDisplay::processPolygon(
   manual_object->clear();
   manual_object->setVisible(true);
 
-  // ポリゴンの三角形分割と描画
+  // Polygon triangulation and drawing
   if (polygon.polygon.points.size() < 3) {
-    return;  // 3点未満のポリゴンは描画できない
+    return;  // Cannot draw polygons with less than 3 points
   }
 
-  // 多角形を描画（単純な三角形扇）
+  // Draw polygon (simple triangle fan)
   manual_object->begin(materials_[i]->getName(), Ogre::RenderOperation::OT_TRIANGLE_FAN);
 
-  // 重心を計算して最初の点として追加
+  // Calculate centroid and add as first point
   Ogre::Vector3 centroid(0, 0, 0);
   for (size_t j = 0; j < polygon.polygon.points.size(); j++) {
     centroid.x += polygon.polygon.points[j].x;
@@ -308,14 +308,14 @@ void PolygonArrayDisplay::processPolygon(
   manual_object->position(centroid);
   manual_object->colour(color.r, color.g, color.b, color.a);
 
-  // 各頂点を追加
+  // Add each vertex
   for (size_t j = 0; j < polygon.polygon.points.size(); j++) {
     manual_object->position(
       polygon.polygon.points[j].x, polygon.polygon.points[j].y, polygon.polygon.points[j].z);
     manual_object->colour(color.r, color.g, color.b, color.a);
   }
 
-  // 最初の頂点を再度追加して閉じる
+  // Add the first vertex again to close
   if (polygon.polygon.points.size() > 0) {
     manual_object->position(
       polygon.polygon.points[0].x, polygon.polygon.points[0].y, polygon.polygon.points[0].z);
@@ -329,7 +329,7 @@ void PolygonArrayDisplay::processNormal(
   const size_t i, const geometry_msgs::msg::PolygonStamped & polygon)
 {
   if (polygon.polygon.points.size() < 3) {
-    return;  // 法線を計算するには少なくとも3点必要
+    return;  // Need at least 3 points to compute normal
   }
 
   Ogre::SceneNode * scene_node = arrow_nodes_[i];
@@ -346,7 +346,7 @@ void PolygonArrayDisplay::processNormal(
   scene_node->setPosition(position);
   scene_node->setOrientation(orientation);
 
-  // 重心を計算
+  // Calculate centroid
   Ogre::Vector3 centroid(0, 0, 0);
   for (size_t j = 0; j < polygon.polygon.points.size(); j++) {
     centroid.x += polygon.polygon.points[j].x;
@@ -355,7 +355,7 @@ void PolygonArrayDisplay::processNormal(
   }
   centroid /= static_cast<float>(polygon.polygon.points.size());
 
-  // 法線を計算（最初の3点を使用）
+  // Calculate normal (using first 3 points)
   Ogre::Vector3 v1(
     polygon.polygon.points[1].x - polygon.polygon.points[0].x,
     polygon.polygon.points[1].y - polygon.polygon.points[0].y,
@@ -384,7 +384,7 @@ void PolygonArrayDisplay::processNormal(
 }
 
 void PolygonArrayDisplay::processMessage(
-  ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr msg)
+  whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr msg)
 {
   // Process message
   // Check if each polygon is valid - modify validateFloats function
@@ -424,7 +424,7 @@ void PolygonArrayDisplay::processMessage(
 
   latest_msg_ = msg;
 
-  // シーンノードとマテリアルの更新
+  // Update scene nodes and materials
   updateSceneNodes(msg);
   allocateMaterials(msg->polygons.size());
   updateLines(msg->polygons.size());
@@ -530,9 +530,9 @@ void PolygonArrayDisplay::updateNormalLength()
   normal_length_ = normal_length_property_->getFloat();
 }
 
-}  // namespace ros2_whill_visualization
+}  // namespace whill_visualization
 
 #include <pluginlib/class_list_macros.hpp>
 
 #include "moc_polygon_array_display.cpp"
-PLUGINLIB_EXPORT_CLASS(ros2_whill_visualization::PolygonArrayDisplay, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(whill_visualization::PolygonArrayDisplay, rviz_common::Display)
