@@ -16,7 +16,7 @@ namespace ros2_whill_visualization
 PolygonArrayDisplay::PolygonArrayDisplay()
 : only_border_(true), enable_lighting_(true), show_normal_(true), normal_length_(0.1)
 {
-  // プロパティの初期化
+  // Initialize properties
   coloring_property_ = new rviz_common::properties::EnumProperty(
     "Coloring", "Auto", "Coloring method for polygons", this, SLOT(updateColoring()));
   coloring_property_->addOption("Auto", 0);
@@ -50,7 +50,7 @@ PolygonArrayDisplay::PolygonArrayDisplay()
 
 PolygonArrayDisplay::~PolygonArrayDisplay()
 {
-  // クリーンアップ
+  // Cleanup
   for (size_t i = 0; i < lines_.size(); i++) {
     delete lines_[i];
   }
@@ -386,8 +386,8 @@ void PolygonArrayDisplay::processNormal(
 void PolygonArrayDisplay::processMessage(
   ros2_whill_visualization_msgs::msg::PolygonArray::ConstSharedPtr msg)
 {
-  // メッセージの処理
-  // 各ポリゴンが有効かチェック - validateFloats関数を修正
+  // Process message
+  // Check if each polygon is valid - modify validateFloats function
   bool valid = true;
   for (const auto & polygon : msg->polygons) {
     for (const auto & point : polygon.polygon.points) {
@@ -430,7 +430,7 @@ void PolygonArrayDisplay::processMessage(
   updateLines(msg->polygons.size());
 
   if (only_border_) {
-    // 境界線のみを表示
+    // Display only borders
     for (size_t i = 0; i < manual_objects_.size(); i++) {
       manual_objects_[i]->setVisible(false);
     }
@@ -442,7 +442,7 @@ void PolygonArrayDisplay::processMessage(
       }
     }
   } else {
-    // 塗りつぶし表示
+    // Fill display
     for (size_t i = 0; i < msg->polygons.size(); i++) {
       processPolygonMaterial(i);
     }
@@ -453,7 +453,7 @@ void PolygonArrayDisplay::processMessage(
     }
   }
 
-  // 法線表示
+  // Normal display
   if (show_normal_) {
     for (size_t i = 0; i < msg->polygons.size(); i++) {
       const auto & polygon = msg->polygons[i];

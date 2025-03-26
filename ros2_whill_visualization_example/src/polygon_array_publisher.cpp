@@ -15,11 +15,7 @@ class PolygonArrayPublisher : public rclcpp::Node
 public:
   PolygonArrayPublisher() : Node("polygon_array_publisher")
   {
-    // 出版者を作成
-    publisher_ =
-      this->create_publisher<PolygonArray>("polygon_array", 10);
-
-    // タイマーを作成
+    publisher_ = this->create_publisher<PolygonArray>("polygon_array", 10);
     timer_ =
       this->create_wall_timer(100ms, std::bind(&PolygonArrayPublisher::timer_callback, this));
   }
@@ -27,37 +23,34 @@ public:
 private:
   void timer_callback()
   {
-    // 現在の時間を取得
     auto now = this->now();
     PolygonArray message;
     message.header.stamp = now;
     message.header.frame_id = "map";
 
-    // 4つのポリゴンを作成
     for (int i = 0; i < 4; ++i) {
       geometry_msgs::msg::PolygonStamped polygon;
       polygon.header.stamp = now;
       polygon.header.frame_id = "map";
 
-      // それぞれのポリゴンの頂点を作成
       double radius = 1.0;
       double offset_x = i * 2.5;
       double offset_y = 0.0;
 
-      // 正方形
+      // Square
       if (i == 0) {
         add_vertex(polygon, offset_x - radius, offset_y - radius, 0.0);
         add_vertex(polygon, offset_x + radius, offset_y - radius, 0.0);
         add_vertex(polygon, offset_x + radius, offset_y + radius, 0.0);
         add_vertex(polygon, offset_x - radius, offset_y + radius, 0.0);
       }
-      // 三角形
+      // Triangle
       else if (i == 1) {
         add_vertex(polygon, offset_x, offset_y + radius, 0.0);
         add_vertex(polygon, offset_x - radius, offset_y - radius, 0.0);
         add_vertex(polygon, offset_x + radius, offset_y - radius, 0.0);
       }
-      // 五角形
+      // Pentagon
       else if (i == 2) {
         for (int j = 0; j < 5; ++j) {
           double angle = 2.0 * M_PI * j / 5.0;
@@ -65,7 +58,7 @@ private:
             polygon, offset_x + radius * std::cos(angle), offset_y + radius * std::sin(angle), 0.0);
         }
       }
-      // 六角形
+      // Hexagon
       else {
         for (int j = 0; j < 6; ++j) {
           double angle = 2.0 * M_PI * j / 6.0;

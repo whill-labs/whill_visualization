@@ -1,41 +1,43 @@
 # ros2_whill_visualization
 
-## 概要
+## Overview
 
-ros2_whill_visualizationは、ROS2環境で使用される可視化関連のパッケージ群です。以下の3つのパッケージで構成されています：
+ros2_whill_visualization is a collection of visualization-related packages for use in ROS2 environments. It consists of the following three packages:
 
 * ros2_whill_visualization_msgs
-  * PolygonArray等のメッセージ定義を提供
+  * Provides message definitions like PolygonArray
+  * References the Polygon Array msg from [ROS1's jsk_recognition](https://github.com/jsk-ros-pkg/jsk_recognition) ported to ROS2
 * ros2_whill_visualization_rviz_plugins
-  * PolygonArray等をRviz2で表示するためのプラグインを提供
+  * Provides plugins for displaying PolygonArray and other messages in Rviz2
+  * References the Polygon Array Rviz Plugin from [ROS1's jsk_visualization](https://github.com/jsk-ros-pkg/jsk_visualization) ported to ROS2
 * ros2_whill_visualization_example
-  * メッセージとプラグインの使用例を提供
-  * デモ用のノードとlaunchファイルを含む
+  * Provides usage examples for messages and plugins
+  * Includes demo nodes and launch files
 
-## インストール方法
+## Installation
 
 ```bash
-# ワークスペースに移動
+# Change to workspace directory
 cd ~/ros2_ws/src
 
-# リポジトリをクローン
+# Clone the repository
 git clone https://github.com/whill/ros2_whill_visualization.git
 
-# 依存関係をインストール
+# Install dependencies
 cd ~/ros2_ws
 rosdep install --from-paths src --ignore-src -r -y
 
-# ビルド
-colcon build --packages-select ros2_whill_visualization
+# Build
+colcon build
 ```
 
-## 開発者情報
+## Developer Information
 
 - Copyright (c) 2023, WHILL Inc.
 
-## ライセンス
+## License
 
-このパッケージはMITライセンスの下で提供されています。
+This package is provided under the MIT License.
 
 MIT License
 
