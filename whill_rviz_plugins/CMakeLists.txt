@@ -45,7 +45,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME}
- PRIVATE "RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY"
+  PRIVATE "RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY"
 )
 
 pluginlib_export_plugin_description_file(rviz_common plugin_description.xml)
