@@ -14,10 +14,7 @@ jobs:
     name: Build (Jazzy)
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/whill-labs/ci/ros:jazzy-ros-base
-      credentials:
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      image: ghcr.io/whill-labs/ci/ros:jazzy-desktop-full
     steps:
       - uses: actions/checkout@v4
       - uses: ros-tooling/setup-ros@v0.7
