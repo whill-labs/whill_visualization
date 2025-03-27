@@ -14,7 +14,8 @@
   <depend>rviz_rendering</depend>
   <depend>rviz_default_plugins</depend>
   <depend>pluginlib</depend>
-  <depend>Qt5</depend>
+  <depend>qtbase5-dev</depend>
+  <depend>libqt5-widgets</depend>
   <depend>whill_visualization_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
