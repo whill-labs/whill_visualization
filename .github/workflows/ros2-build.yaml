@@ -1,0 +1,46 @@
+name: ROS 2 Package Build
+on:
+  push:
+    paths:
+      - '**'
+      - '!**.md'
+      - '!**.rst'
+      - '!.github/**'
+      - '.github/workflows/ros2-build.yaml'
+  workflow_dispatch:
+
+jobs:
+  build-jazzy:
+    name: Build (Jazzy)
+    runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/whill-labs/ci/ros:jazzy-desktop-full
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: jazzy
+      - name: Make ccache dir
+        run: |
+          mkdir -p /tmp/ccache
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/ccache
+          key: ccache-jazzy
+      - name: Search packages in this repository
+        id: list_packages
+        run: |
+          echo "package_list=$(colcon list --names-only | grep -v 'workspace root' | sed -e ':loop; N; $!b loop; s/\n/ /g')" >> $GITHUB_OUTPUT
+      - name: Show target packages
+        run: |
+          echo "Target packages: ${{ steps.list_packages.outputs.package_list }}"
+      - uses: ros-tooling/action-ros-ci@v0.4
+        with:
+          package-name: ${{ steps.list_packages.outputs.package_list }}
+          target-ros2-distro: jazzy
+          no-symlink-install: true
+          import-token: ${{ secrets.GITHUB_TOKEN }}
+          extra-cmake-args: -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        env:
+          CCACHE_DIR: /tmp/ccache
+          DEVELOP: true
