@@ -14,3 +14,7 @@ whill_visualization is a collection of visualization-related packages for use in
   * Provides usage examples for messages and plugins
   * Includes demo nodes and launch files
 
+## Demo
+
+![Rviz](image/demo.png)
+
